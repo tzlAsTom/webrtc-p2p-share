@@ -1,5 +1,9 @@
 extends layout
 
+block append header
+  script(type="text/javascript" src='/javascripts/app.js' defer)
+
 block content
   h1= title
   p Welcome to #{title}
+  button(id="test") Test
