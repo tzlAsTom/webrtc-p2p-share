@@ -4,6 +4,61 @@ block append header
   script(type="text/javascript" src='/javascripts/app.js' defer)
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(id="content")
+    p(style="text-align:right") Welcome, user ##{userId}
+      span(id="roomWelcomeHeader")
+    
+    div(id="mainIndexPage")
+      div(style="text-align:center;")
+        button(id="createRoom" class="btn btn-primary btn-lg" style="margin: 0.5rem" data-bs-toggle="modal" data-bs-target="#createRoomModal") Create Room
+        button(id="joinRoom" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#joinRoomModal") Join Room
+        
+      <div class="modal fade" id="createRoomModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Share file with others in same room. Share [Room ID] to other so that they can join.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quit</button>
+              <button type="button" class="btn btn-primary" id="createRoomConfirmButton">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal fade" id="joinRoomModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel2">Join Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <span>Room ID: <span>
+              <input id="joinRoomModalRoomId" type="number"  />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quit</button>
+              <button type="button" class="btn btn-primary"  id="joinRoomConfirmButton">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    div(id="roomIndexPage" style="display:none")
+      div(id="chatHistoryPage" style="min-height:12rem;background-color:#f8f9fa")
+      <input id="fileInput" type="file" />
+      button(id="shareFileBtn" class="btn btn-primary btn-middle") Share File
+    
+  div(id="loadingPage" style="position: fixed; left: 0px; top: 0px; height: 100%; width: 100%; z-index: 999; text-align:center;background-color:#000000aa;display:none;")
+    div(style="position: relative; top: 50%")
+      div(class="spinner-border" role="status")
+        span(class="visually-hidden") Loading...
+      span(style="position: relative; display:inline-block;width:100%;") Loading...
+    
   button(id="test") Test
