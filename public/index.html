@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple P2P Share</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css' integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous" > </script>
+
+  <script type="text/javascript" src='/javascripts/app.js' defer ></script>
+</head>
+
+<body class="container">
+  <div style="position:fixed; z-index:10; left:0; top: 0;" aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100">
+    <div id="toastContainer" class="toast-container">
+      <div id="toastTemplate" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+        <div class="toast-header">
+          <strong class="me-auto"><span id="toastTitle">Bootstrap</span></strong>
+          <small><span id="toastTime">11 mins ago</span></small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          <span id="toastBody">Hello, world! This is a toast message.</span>
+          <button id="toastAccept" class="btn btn-primary btn-sm" style="margin-right: 1rem;float:right;">Accept</buttion>
+          <button id="toastReject" class="btn btn-primary btn-sm" style="margin-right: 1rem;float:right;">Reject</buttion>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <p style="text-align:right"> 
+      Welcome, 
+      <span id="userWelcomeHeader"></span>
+      <span id="roomWelcomeHeader"></span>
+      <button id="roomLeaveBtn" class="btn btn-link" style="vertical-align:baseline;display:none;">Leave</button>
+    </p>
+  
+    <div id="mainIndexPage">
+      <div style="text-align:center;">
+        <button id="createRoom" class="btn btn-primary btn-lg" style="margin: 0.5rem" data-bs-toggle="modal" data-bs-target="#createRoomModal"> Create Room </button>
+        <button id="joinRoom" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#joinRoomModal"> Join Room </button>
+      </div>
+      
+      <div class="modal fade" id="createRoomModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Share file with others in same room. Share [Room ID] to other so that they can join.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quit</button>
+              <button type="button" class="btn btn-primary" id="createRoomConfirmButton">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal fade" id="joinRoomModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel2">Join Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <span>Room ID: <span>
+              <input id="joinRoomModalRoomId" type="number"  />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quit</button>
+              <button type="button" class="btn btn-primary"  id="joinRoomConfirmButton">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div id="roomIndexPage" style="display:none">
+      <div id="chatHistoryPage" style="min-height:12rem;background-color:#f8f9fa">
+      </div>
+      <input id="fileInput" type="file" />
+      <button id="shareFileBtn" class="btn btn-primary btn-middle"> Share File </button>
+      
+      <div class="modal fade" id="leaveRoomModal" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel3">Leave Room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <span>Are you sure? <span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quit</button>
+              <button type="button" class="btn btn-primary"  id="leaveRoomConfirmBtn">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <div id="loadingPage" style="position: fixed; left: 0px; top: 0px; height: 100%; width: 100%; z-index: 2000; text-align:center;background-color:#000000aa;display: flex;  align-items: center;  justify-content: center;visibility:visible; ">
+    <div>
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden"> Loading...</span>
+      </div>
+      <span style="position: relative; display:inline-block;width:100%;"> Loading... <noscript><strong>Error: Javascript disabled!</strong></noscript></span>
+    </div>
+  </div>
+  
+  <div id="errorAlert" style="position: fixed; left: 0px; top: 0px; height: 100%; width: 100%; z-index: 2100; text-align:center;background-color:#00000099;display: flex;  align-items: center;  justify-content: center; visibility:hidden;">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="min-width:40%">
+      <h4>Error!</h4>
+      
+      <span id="errorAlertMsg">You should check in on some of those fields below.</span>
+      <hr />
+      <button id="errorAlertDismissBtn" type="button" class="btn btn-primary btn-sm">
+        Close
+      </button>
+    </div>
+  </div>
+  
+</body>
+</html>

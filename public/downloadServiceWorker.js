@@ -45,12 +45,12 @@ self.addEventListener('fetch', (event) => {
       'Content-Length': (fileSize || 0),
     },
   });
-  console.log(response);
+  //console.log(response);
   event.respondWith(response);
 });
 
 self.onmessage = function(e) {
-  console.log('Message received in worker', e.data);
+  //console.log('Message received in worker', e.data);
   let data = e.data;
   if(data && data.type == 'download.newData'){
     let jobId = parseInt(data.jobId);
